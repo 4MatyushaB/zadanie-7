@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zdarzenia JavaScript</title>
+    <style>
+        /* Styl dla kontenera (Zadanie 1) */
+        #kontener {
+            width: 500px;
+            height: 50px;
+            background-color: lightgray;
+            font-size: 16px; /* Pierwotny rozmiar czcionki */
+            word-wrap: break-word; /* Zapewnia zawijanie tekstu przy małym divie */
+            cursor: pointer;
+        }
+        /* Styl dla pola tekstowego (Zadanie 3) */
+        #artykul {
+            width: 150px; /* Początkowa szerokość */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Zadanie 1 -->
+    <div id="kontener">Mateusz Makowiecki</div>
+
+    <br>
+
+    <!-- Zadanie 2 -->
+    <p class="wyroznione">Radom</p>
+
+    <br>
+
+    <!-- Zadanie 3 -->
+    <input type="text" id="artykul">
+    <div id="liczba"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            
+            // =================================================================
+            // ZADANIE 1: Element div #kontener
+            // =================================================================
+            const kontener = document.querySelector('#kontener');
+
+            // Kliknięcie -> losowy kolor tła
+            kontener.onclick = function() {
+                const r = Math.floor(Math.random() * 256);
+                const g = Math.floor(Math.random() * 256);
+                const b = Math.floor(Math.random() * 256);
+                this.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+            };
+
+            // Najechanie kursorem -> czcionka x2 (używamy mouseenter/onmouseover)
+            kontener.onmouseover = function() {
+                this.style.fontSize = '32px';
+            };
+
+            // Zabranie kursora -> powrót do pierwotnego rozmiaru (używamy mouseleave/onmouseout)
+            kontener.onmouseout = function() {
+                this.style.fontSize = '16px';
+            };
+
+
+            // =================================================================
+            // ZADANIE 2: Paragraf klasy .wyroznione
+            // =================================================================
+            const paragraf = document.querySelector('.wyroznione');
+
+            // Podwójne kliknięcie (dblclick) -> zmiana na nazwę powiatu
+            paragraf.addEventListener('dblclick', function() {
+                this.innerText = 'powiat radomski';
+            });
+
+            // Najechanie kursorem -> komunikat z zawartością w konsoli
+            paragraf.addEventListener('mouseover', function() {
+                console.log(this.innerText);
+            });
+
+
+            // =================================================================
+            // ZADANIE 3: Pole tekstowe #artykul i div #liczba
+            // =================================================================
+            const artykul = document.querySelector('#artykul');
+            const divLiczba = document.querySelector('#liczba');
+
+            // Reakcja na wciśnięcie klawisza (keydown/keyup)
+            artykul.addEventListener('keyup', function(e) {
+                // 1. Zwiększenie długości (szerokości) pola tekstowego o 1px
+                const obecnaSzerokosc = this.offsetWidth;
+                this.style.width = (obecnaSzerokosc + 1) + 'px';
+
+                // 2. Jeśli wciśnięto cyfrę -> dopisz do div #liczba
+                // Sprawdzamy czy wpisany znak 'e.key' jest cyfrą od 0 do 9
+                if (e.key >= '0' && e.key <= '9') {
+                    divLiczba.innerText += e.key;
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
